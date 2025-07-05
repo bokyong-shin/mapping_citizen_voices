@@ -496,7 +496,7 @@ def main():
     display_topics(lda_model, topic_summaries, top_proposals)
     plot_topic_distribution(proposals_by_round_district, topic_summaries)
     create_heatmap(proposals_by_round_district, topic_summaries, district_order)
-    st.subheader('3.6 Predict Topics for New Proposals')
+    st.subheader('3.5 Predict Topics for New Proposals')
     st.write("""
         Once the model has been trained on historical data, it can be used to predict the topic distribution for new proposals submitted by citizens.
         For instance, let's copy and paste a proposal text from this proposal about improving the Herttoniemi sports park (https://omastadi.hel.fi/processes/osbu-2019/f/171/proposals/124?):

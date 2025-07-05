@@ -398,7 +398,7 @@ def main():
         "Socioeconomic Dependency Index",
         "Public Service Accessibility Index"
     ]
-    selected_index = st.sidebar.selectbox("Select an Index to Visualize", index_options)
+    selected_index = st.sidebar.selectbox("Select an Index to Visualise", index_options)
 
     selected_stat = display_index_map(district_indexes_data, selected_index, 'app/data/districts.geojson')
 

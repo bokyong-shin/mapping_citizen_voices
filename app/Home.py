@@ -14,14 +14,17 @@ st.subheader("Transforming Participatory Budgeting with Combined Data Streams in
 st.write("")
 st.markdown(
     """
-    #### Purpose  
+    #### Purpose
+    
+    Many cities invite residents to suggest ideas for how public money should be spent in their neighbourhoods. This process is called [*participatory budgeting*](https://en.wikipedia.org/wiki/Participatory_budgeting) (PB). Citizen proposals often provide valuable insights into local challenges and community priorities.  
 
-    Citizens’ proposals submitted to participatory budgeting (PB) contain valuable insights into local problems and community-led solutions.  
-    However, when large volumes of proposals are submitted, it becomes difficult to interpret their themes, trends, and spatial patterns.
-
-    This dashboard demonstrates how two publicly available datasets, citizen proposals and district-level statistics, can be combined to turn raw data into meaningful knowledge. Using [OmaStadi PB](https://omastadi.hel.fi/) as a case, this dashboard aims to support a systematic understanding of local needs and helps connect proposals to area-specific characteristics to enable more informed and equitable deliberation throughout the PB process.
+    However, when a large number of proposals are submitted, it can be difficult to understand common themes, trends, or differences between areas. In major cities like Barcelona, Helsinki, New York, Paris, and Seoul, hundreds to thousands of proposals are submitted in each round, making it especially challenging to analyse and respond to citizen input effectively.
+    
+    This dashboard shows how two public datasets, citizen proposals and district-level statistics, can be combined to make sense of this information. Using the [OmaStadi PB programme](https://omastadi.hel.fi/) in Helsinki as an example, the dashboard helps identify local needs and connects proposals to the specific characteristics of each area. The goal is to support more informed and equitable decision-making throughout the participatory process.
 
     The source code for this dashboard is available at: [https://github.com/bokyong-shin/mapping_citizen_voices](https://github.com/bokyong-shin/mapping_citizen_voices)
+    
+    **Note:** This dashboard supports a demonstration of the data analysis and visualisation techniques used in the paper "Mapping Citizen Voices: Transforming Participatory Budgeting with Combined Data Streams in Helsinki". A more comprehensive analysis of the data, including theoretical backgrounds, methods, and detailed descriptions, can be found in the paper once it is published (Latest update: 6 Jul, 2025).
     """
 )
 
@@ -45,7 +48,5 @@ st.markdown(
     This dashboard is built on two key datasets collected through API calls:  
     - **District-level statistical data** from [Helsinki Map Service](https://kartta.hel.fi) and [Helsinki Region Infoshare (HRI)](https://hri.fi/en_gb/), retrieved on 10 March 2025  
     - **Citizen proposals** submitted to [OmaStadi PB](https://omastadi.hel.fi/) during the first three rounds (2018–2024)
-    
-    **Note:** This dashboard supports a demonstration of the data analysis and visualisation techniques used in the paper "Mapping Citizen Voices: Transforming Participatory Budgeting with Combined Data Streams in Helsinki". A more comprehensive analysis of the data, including methods and detailed descriptions, can be found in the paper once it is published.
     """
 )

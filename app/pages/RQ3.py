@@ -238,8 +238,8 @@ def main():
     st.markdown(
         """
         ### **Final Remark: Connecting City Data for Inclusive Decision-Making**  
-        City data is often publicly accessible yet fragmented across different sources, making it difficult to process and utilise effectively.  
-        By connecting city data, city governments can enable citizens to engage with community issues and make informed decisions.
+        Many city governments release data through open data initiatives. However, this information often remains fragmented, inaccessible, or difficult for the public to interpret.  
+        By connecting and visualising city data, as demonstrated in this dashboard, governments can support citizens in understanding community issues and engaging in more informed deliberation and decision-making.
         """
     )
 if __name__ == "__main__":
