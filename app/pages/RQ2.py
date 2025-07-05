@@ -10,13 +10,11 @@ import streamlit_highcharts as hc
 import gensim
 from sklearn.model_selection import train_test_split
 
-import subprocess
 import importlib.util
-
-if not importlib.util.find_spec("fi_core_news_sm"):
-    subprocess.run(["python", "-m", "spacy", "download", "fi_core_news_sm"], check=True)
-
 import spacy
+if not importlib.util.find_spec("fi_core_news_sm"):
+    from spacy.cli import download
+    download("fi_core_news_sm")
 nlp = spacy.load("fi_core_news_sm")
 
 import random
