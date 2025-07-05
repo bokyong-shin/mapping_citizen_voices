@@ -9,7 +9,7 @@ You have two options to explore the dashboard:
 
 ### Option 1: Try the App Online
 
-Visit this URL: [**mapping-citizen-voices.app**](https://mapping-citizen-voices.streamlit.app)
+Visit this URL: [**mapping-citizen-voices.app**](https://mappingcitizenvoices.streamlit.app)
 
 ---
 
