@@ -9,7 +9,16 @@ import plotly.graph_objects as go
 import streamlit_highcharts as hc
 import gensim
 from sklearn.model_selection import train_test_split
+
+import subprocess
+import importlib.util
+
+if not importlib.util.find_spec("fi_core_news_sm"):
+    subprocess.run(["python", "-m", "spacy", "download", "fi_core_news_sm"], check=True)
+
 import spacy
+nlp = spacy.load("fi_core_news_sm")
+
 import random
 import matplotlib.pyplot as plt
 import re
@@ -334,7 +343,6 @@ major_district_mapping = {
 }
     
 
-nlp = spacy.load('fi_core_news_sm')  
 combined_stopwords = set(spacy.lang.fi.stop_words.STOP_WORDS)
 
 def preprocess(text):
