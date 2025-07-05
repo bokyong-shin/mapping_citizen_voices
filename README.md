@@ -9,11 +9,11 @@ You have two options to explore the dashboard:
 
 ### Option 1: Try the App Online
 
-Visit this URL: [**mapping-citizen-voices.app**](https://mappingcitizenvoices.streamlit.app)
+Visit this URL: [**mapping-citizen-voices.app**](https://mapping-citizen-voices.streamlit.app)
 
 ---
 
-### Option 2: Run Locally with Poetry
+### Option 2: Run Locally with pip
 
 If you prefer running the app on your local machine:
 
@@ -23,25 +23,19 @@ If you prefer running the app on your local machine:
     cd mapping_citizen_voices
 ```
 
-2.**Install Poetry:**
+2.**Create and activate a virtual environment:**
 ```bash
-pip install poetry
+python -m venv venv
+source venv/bin/activate # On Windows: venv\Scripts\activate
 ```
 
-3.**Install dependencies using Poetry:**
+3.**Install dependencies from requirements.txt:**
 ```bash
-poetry install
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-4.**Activate the Poetry shell:**
-```bash
-poetry shell
-```
-5.**Install the Finnish language model for spaCy:**
-```bash
-python -m spacy download fi_core_news_sm
-```
-6.**Run the App:**
+4.**Run the App:**
 ```bash
 streamlit run app/Home.py
 ```
