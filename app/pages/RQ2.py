@@ -96,23 +96,19 @@ def display_random_sample(sample_proposals):
         st.write(f"**Round:** {sampled_proposal['round']}")
         st.write(f"**District:** {sampled_proposal['district']}")
     
-def display_coh_per(topic_data, save_path="coherence_perplexity_plot.png"):
+def display_coh_per(topic_data):
     st.subheader('3.1 Coherence and Perplexity Scores (10 iterations per topic number)')
-
     topic_grouped = topic_data.groupby('topic').agg({
         'coherence': ['mean', list],
         'perplexity': ['mean', list]
     }).reset_index()
-
     topics = topic_grouped['topic'].tolist()
     coherence_means = topic_grouped['coherence']['mean'].tolist()
     perplexity_means = topic_grouped['perplexity']['mean'].tolist()
     coherence_points = topic_grouped['coherence']['list'].tolist()
     perplexity_points = topic_grouped['perplexity']['list'].tolist()
-
     x = np.array(topics) 
     fig, axes = plt.subplots(1, 2, figsize=(9.5, 4.25), dpi=600)  
-
     ax1 = axes[0]
     for i, scores in enumerate(coherence_points):
         ax1.scatter([topics[i]] * len(scores), scores, color='blue', alpha=0.3, label='Coherence (points)' if i == 0 else "")
@@ -122,7 +118,6 @@ def display_coh_per(topic_data, save_path="coherence_perplexity_plot.png"):
     ax1.set_title("Coherence Score by Number of Topics")
     ax1.legend()
     ax1.set_xticks(x.astype(int))
-
     ax2 = axes[1]
     for i, scores in enumerate(perplexity_points):
         ax2.scatter([topics[i]] * len(scores), scores, color='red', alpha=0.3, label='Perplexity (points)' if i == 0 else "")
@@ -132,14 +127,8 @@ def display_coh_per(topic_data, save_path="coherence_perplexity_plot.png"):
     ax2.set_title("Perplexity by Number of Topics")
     ax2.legend()
     ax2.set_xticks(x.astype(int))
-
     plt.tight_layout()
-    plt.savefig(save_path, dpi=600, bbox_inches="tight")  
-
     st.pyplot(fig)
-
-    with open(save_path, "rb") as img_file:
-        st.download_button(label="Download Plot", data=img_file, file_name="coherence_perplexity_plot.png", mime="image/png")
 
 topic_summaries = {
     0: {
@@ -223,7 +212,7 @@ def plot_topic_distribution(proposals_by_round_district, topic_summaries):
     Plot a bar chart to show the distribution of topics across all proposals, 
     sorted by values and labeled with the topic titles.
     """
-    st.subheader("3.3. Popular Topics in Citizen Ideas")
+    st.subheader("3.3. Popular Topics")
 
     topic_columns = [f"Topic_{i}" for i in range(7)]  
     topic_distribution = proposals_by_round_district[topic_columns].sum()
@@ -427,7 +416,6 @@ def display_bar_chart(tree_map_data):
     hc.streamlit_highcharts(chart_options, height=600)
 
 def display_topic_trends(district_topic_data, topic_colors=None):
-    """Displays topic proportion trends over years for a selected district using a line chart."""
     st.subheader("3.5 Topic Trends Over Time by District")
 
     if topic_colors is None:
@@ -466,7 +454,7 @@ def display_topic_trends(district_topic_data, topic_colors=None):
     st.plotly_chart(fig, use_container_width=True)
 
 def main():
-    APP_TITLE = "📄 RQ2: What are the consistent thematic topics in citizen proposals across three rounds of OmaStadi PB?"
+    APP_TITLE = "RQ2: What are the consistent thematic topics in citizen proposals across three rounds of OmaStadi PB?"
     if "page_config_set" not in st.session_state:
         st.set_page_config(APP_TITLE, layout='wide')
         st.session_state.page_config_set = True
@@ -512,6 +500,8 @@ def main():
     st.write("""
         Once the model has been trained on historical data, it can be used to predict the topic distribution for new proposals submitted by citizens.
         For instance, let's copy and paste a proposal text from this proposal about improving the Herttoniemi sports park (https://omastadi.hel.fi/processes/osbu-2019/f/171/proposals/124?):
+        
+        __________________________ Copy and paste the proposal text below __________________________
         
         Herttoniemen liikuntapuisto on häpeällisen huonossa kunnossa ja mahdollisuuksiinsa nähden aivan liian vähällä käytöllä. Perusparannus tulee aloittaa tekonurmen asentamisesta hiekkakentälle.
         - jalkapallo on Suomen suosituin harrastus ja lajin suosio kasvaa erityisesti tyttöjen keskuudessa.

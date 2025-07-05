@@ -1,0 +1,10 @@
+[[theme.fontFaces]]
+family = "WorkSans"
+url = "app/static/WorkSans-VariableFont_wght.ttf"
+style = "normal"
+
+[theme]
+font="WorkSans"
+
+[server]
+enableStaticServing = true

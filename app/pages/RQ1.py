@@ -154,7 +154,7 @@ def display_index_map(df, selected_index, geojson_file):
     return selected_index
 
 def main():
-    APP_TITLE = "🏙️ RQ1: What are the socio-economic and demographic characteristics of Helsinki’s districts and major districts?"
+    APP_TITLE = "RQ1: What are the socio-economic and demographic characteristics of Helsinki’s districts?"
 
     st.set_page_config(APP_TITLE, layout='wide')
     st.title(APP_TITLE)
@@ -235,7 +235,7 @@ def main():
         """
         The Demographic Diversity Index (CDI) quantifies heterogeneity in population characteristics by measuring the probability that two randomly selected individuals belong to different demographic groups. This index applies Simpson’s Diversity Index with Sullivan’s Extension to account for multiple demographic dimensions and aggregate them into a single composite diversity measure (McLaughlin et al., 2016).
         
-        McLaughlin, J.E., McLaughlin, G.W., McLaughlin, J.S. and White, C.Y. (2016), “Using Simpson’s diversity index to examine multidimensional models of diversity in health professions education”, International Journal of Medical Education, Vol. 7, p. 1.
+        McLaughlin, J. E., McLaughlin, G. W., McLaughlin, J. S., & White, C. Y. (2016). Using Simpson’s diversity index to examine multidimensional models of diversity in health professions education. *International Journal of Medical Education*, 7, 1–5.
         """
     )
 
