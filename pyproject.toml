@@ -13,11 +13,12 @@ folium = "^0.15"
 streamlit-folium = "^0.14"
 plotly = "^5.20"
 streamlit-highcharts = "^0.1.0"
-gensim = "^4.3"
+gensim = { version = "^4.3.0", allow-prereleases = true, extras = ["binary"] }
 scikit-learn = "^1.4"
 spacy = "^3.8"
 matplotlib = "^3.8"
 geopandas = "^1.1.1"
+scipy = "^1.12.0"
 fi-core-news-sm = { url = "https://github.com/explosion/spacy-models/releases/download/fi_core_news_sm-3.8.0/fi_core_news_sm-3.8.0-py3-none-any.whl" }
 
 [build-system]
