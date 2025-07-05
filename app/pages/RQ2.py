@@ -9,18 +9,12 @@ import plotly.graph_objects as go
 import streamlit_highcharts as hc
 import gensim
 from sklearn.model_selection import train_test_split
-
-import importlib.util
 import spacy
-if not importlib.util.find_spec("fi_core_news_sm"):
-    from spacy.cli import download
-    download("fi_core_news_sm")
 nlp = spacy.load("fi_core_news_sm")
 
 import random
 import matplotlib.pyplot as plt
 import re
-
 
 # Load data at the start to avoid reloading on every interaction
 @st.cache_data

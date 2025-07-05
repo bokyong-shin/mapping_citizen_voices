@@ -19,6 +19,9 @@ spacy = "^3.8"
 matplotlib = "^3.8"
 geopandas = "^1.1.1"
 
+[tool.poetry.dependencies]
+fi-core-news-sm = { url = "https://github.com/explosion/spacy-models/releases/download/fi_core_news_sm-3.8.0/fi_core_news_sm-3.8.0-py3-none-any.whl" }
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
