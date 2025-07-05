@@ -13,9 +13,9 @@ def load_data():
     """
     Load datasets required for district-level analysis.
     """
-    indexes = pd.read_csv('data/indexes.csv')  
-    weighted_averages_cleaned = pd.read_csv('data/weighted_averages_cleaned.csv')  # Compressed district statistics (2018-2023)
-    district_topic_data = pd.read_csv("data/district_topic_proportions.csv")
+    indexes = pd.read_csv('app/data/indexes.csv')  
+    weighted_averages_cleaned = pd.read_csv('app/data/weighted_averages_cleaned.csv')  # Compressed district statistics (2018-2023)
+    district_topic_data = pd.read_csv("app/data/district_topic_proportions.csv")
     
     return indexes, weighted_averages_cleaned, district_topic_data
 indexes, weighted_averages_cleaned, district_topic_data = load_data()
@@ -233,7 +233,7 @@ def main():
     These patterns reflect a spatial and socioeconomic divide in citizen priorities: **with privileged districts emphasising community services, and less privileged ones focusing on youth needs and basic support.**
     """
     )
-    st.image('data/correlation_heatmap.png')
+    st.image('app/data/correlation_heatmap.png')
     st.write("")
     st.markdown(
         """

@@ -18,14 +18,14 @@ import re
 # Load data at the start to avoid reloading on every interaction
 @st.cache_data
 def load_data():
-    pro_merged = pd.read_csv('data/pro_merged.csv')
-    sample_proposals = pd.read_csv('data/sample_proposals.csv')
-    topic_numbers = pd.read_csv('data/topic_numbers.csv')
-    lda_model = gensim.models.ldamodel.LdaModel.load("data/lda_model.model")
-    dictionary = gensim.corpora.Dictionary.load("data/lda_dictionary.dict")
-    propsals_by_round_district = pd.read_csv('data/proposals_by_round_district.csv')
-    top_proposals = pd.read_csv('data/top_proposals_per_topic.csv')
-    district_topic_data = pd.read_csv("data/district_topic_proportions.csv")
+    pro_merged = pd.read_csv('app/data/pro_merged.csv')
+    sample_proposals = pd.read_csv('app/data/sample_proposals.csv')
+    topic_numbers = pd.read_csv('app/data/topic_numbers.csv')
+    lda_model = gensim.models.ldamodel.LdaModel.load("app/data/lda_model.model")
+    dictionary = gensim.corpora.Dictionary.load("app/data/lda_dictionary.dict")
+    propsals_by_round_district = pd.read_csv('app/data/proposals_by_round_district.csv')
+    top_proposals = pd.read_csv('app/data/top_proposals_per_topic.csv')
+    district_topic_data = pd.read_csv("app/data/district_topic_proportions.csv")
     return pro_merged, sample_proposals, topic_numbers, lda_model, dictionary, propsals_by_round_district, top_proposals, district_topic_data
 
 @st.cache_data

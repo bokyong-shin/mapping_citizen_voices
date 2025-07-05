@@ -9,7 +9,7 @@ import streamlit_highcharts as hc
 # Load data at the start to avoid reloading on every interaction
 @st.cache_data
 def load_data():
-    indexes = pd.read_csv('data/indexes.csv')
+    indexes = pd.read_csv('app/data/indexes.csv')
     return indexes
 
 def display_year_filters(df):
@@ -165,7 +165,7 @@ def main():
     ##### If there is not-available values in a specific year and district, it is displayed as a white colour.
     """
 )
-    district_data = pd.read_csv('data/district_data.csv')
+    district_data = pd.read_csv('app/data/district_data.csv')
 
     notes = {
         "Population": "The total number of people living in a given area.",
@@ -212,7 +212,7 @@ def main():
     
     st.sidebar.markdown(f"**Note:**<br>{notes.get(statistics_column, 'No additional information available for this statistic.')}", unsafe_allow_html=True)
 
-    df_year, selected_stat = display_map(district_data, selected_year, statistics_column, 'data/districts.geojson')
+    df_year, selected_stat = display_map(district_data, selected_year, statistics_column, 'app/data/districts.geojson')
     display_statistics(df_year, selected_stat)
     
     indexes = load_data()
@@ -388,7 +388,7 @@ def main():
     )
     
     st.markdown("### Timeseries of District-Level Indexes")
-    st.image('data/indices_timeseries.png')
+    st.image('app/data/indices_timeseries.png')
     
     district_indexes_data = district_data.merge(indexes, on=["Area", "Year"], how="left")
 
@@ -400,7 +400,7 @@ def main():
     ]
     selected_index = st.sidebar.selectbox("Select an Index to Visualize", index_options)
 
-    selected_stat = display_index_map(district_indexes_data, selected_index, 'data/districts.geojson')
+    selected_stat = display_index_map(district_indexes_data, selected_index, 'app/data/districts.geojson')
 
 if __name__ == "__main__":
     main()
