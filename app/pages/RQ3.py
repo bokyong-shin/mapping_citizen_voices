@@ -208,6 +208,10 @@ def main():
     So far, **RQ1** (district-level statistics) and **RQ2** (citizen proposal topics) have been explored separately to translate raw data into useful information.  
     This page brings them together to map the relationship between district characteristics and citizen proposal topics.  
     By linking otherwise separate public datasets, we can gain a more comprehensive and community-informed understanding of citizen voices.
+    
+    For instance, take the case of [Alppiharju](https://en.wikipedia.org/wiki/Alppiharju). 
+    There is a noticeable rise in citizen interest in developing spaces for children and youth, even though the district ranks among the lowest in youth population (34th), elderly population (33rd), and service provision for playgrounds (34th) and daycare facilities (34th) out of 34 districts. 
+    This mismatch highlights how relying on a single dataset can lead to opposing policy priorities, as statistical indicators clearly show that youth and young families are marginalised groups in the area.
     """
     )
     st.write("")

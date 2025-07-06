@@ -36,11 +36,11 @@ def get_sampled_df(pro_merged):
     return sampled_df
 
 def display_map(pro_merged):
-    """
-    Display a Folium map with the proposal data.
-    """
     st.subheader('2. Proposals on a Map')
-
+    st.write("""
+             When a proposal is submitted, a proposer can mark the location of the proposal on a map, a crucial information for understanding the association between the proposal content and its geographical context.
+             Let's explore the red and green markers on the map, which represent the proposals that were not selected and selected, respectively.
+             """)
     sampled_df = get_sampled_df(pro_merged)
 
     m = folium.Map(location=[60.1699, 24.9384], zoom_start=12)
@@ -78,10 +78,10 @@ def display_map(pro_merged):
     st_folium(m, width=1000, height=600)
     
 def display_random_sample(sample_proposals):
-    """
-    Display a randomly sampled proposal from the data when a button is clicked.
-    """
     st.subheader("1. What is a 'proposal'?")
+    st.markdown("""
+        **Citizen Proposal**: A document presenting an idea or plan others can review and decide upon, usually in a structured, written format.            
+    """)
 
     if 'sampled_proposal' not in st.session_state:
         st.session_state.sampled_proposal = None
@@ -214,6 +214,11 @@ def plot_topic_distribution(proposals_by_round_district, topic_summaries):
     sorted by values and labeled with the topic titles.
     """
     st.subheader("3.3. Popular Topics")
+    st.markdown("""
+                The most frequent topics include enhancing pathways and park connectivity (Topic 5), developing spaces for children and youth (Topic 7), and creating inclusive public spaces and services (Topic 3).   
+                These top-ranked themes suggest that residents prioritise the improvement and everyday use of public spaces across neighbourhoods.
+                """
+    )
 
     topic_columns = [f"Topic_{i}" for i in range(7)]  
     topic_distribution = proposals_by_round_district[topic_columns].sum()
@@ -267,6 +272,12 @@ district_order = [
 
 def create_heatmap(df, topic_summaries, district_order):
     st.subheader("3.4 Heatmap of Topic Distribution by District")
+    st.markdown("""
+                The heatmap shows spatial variation in topic emphasis, with districts generally ordered from west to east. 
+                While western districts tend to prioritise park connectivity, some northern areas (e.g., Itä-Pakila and Puistola) show stronger interest in youth-oriented spaces. If you check the proportion of youth in the RQ1 page, the northern part especially shows the highest levels. 
+                Although clear west–east patterns are not consistent, several districts display distinctive priorities shaped by local needs and contexts.
+                """
+    )
     heatmap_data = prepare_heatmap_data(df)
     topic_titles = [topic_summaries[i]["title"] for i in range(7)]  
     heatmap_data = heatmap_data.set_index('district').reindex(district_order).reset_index()
@@ -460,38 +471,46 @@ def main():
         st.session_state.page_config_set = True
     st.title(APP_TITLE)
     st.markdown("""
-        ##### This page provides an in-depth analysis citizen ideas submitted to [OmaStadi participatory budgeting](https://omastadi.hel.fi/) in Helsinki.
-        ##### It explores how these ideas go through the whole cycle of PB, and offers insights into key themes through topic modeling.
+        This page provides an in-depth analysis citizen ideas submitted to [OmaStadi participatory budgeting](https://omastadi.hel.fi/) in Helsinki.
+        It explores how these ideas go through the whole cycle of PB, and offers insights into key themes through topic modeling.
     """)
     st.write("")
     pro_merged, sample_proposals, topic_numbers, lda_model, dictionary, proposals_by_round_district, top_proposals, district_topic_data = load_data()
     display_random_sample(sample_proposals)
-    st.markdown("""
-        **Citizen Proposal**: A document presenting an idea or plan others can review and decide upon, usually in a structured, written format.            
-    """)
-    st.write("")
+    st.write("__")
     display_map(pro_merged)
-    st.write("When a proposal is submitted, a proposer can mark the location of the proposal on a map, a crucial information for understanding the association between the proposal content and its geographical context.")
     st.write("")
     st.markdown("""
         ### 3. Major themes (topics)
     """)
     st.markdown("""
         We now move on to applying the Latent Dirichlet Allocation (LDA) model to identify major topics from the citizen proposals.
-
-        **LDA Model**: LDA is a generative statistical model that assumes each document is a mixture of several topics and each topic is a distribution of words. It helps to uncover the hidden structure in the text data by grouping related words into topics, making it a useful tool for understanding and summarising large collections of documents.
-
-        Two metrics are used to define the optimal number of topics: 
-        - Coherence Score: Coherence measures the interpretability and semantic consistency of topics by comparing word pair co-occurrences within the topics. Higher coherence scores suggest better and more meaningful topics.
-        - Perplexity Score: Perplexity measures how well a probabilistic model predicts a sample. In the context of LDA, lower perplexity values indicate that the model has a better predictive power for unseen data.
-
-        The following chart displays the coherence and perplexity scores for different numbers of topics in the LDA model. The goal is to select the number of topics that strikes a balance between a high coherence score and a low perplexity score, ensuring that the topics are both interpretable and predictive.
-        As shown in the chart, the optimal number of topics is 7, which has a high coherence score and a low perplexity score.
     """)
+    with st.expander("What is LDA?"):
+        st.markdown("""
+            LDA (Latent Dirichlet Allocation) is a generative probabilistic model that is used to discover topics in a collection of documents.  
+            
+            It assumes that each document is a mixture of topics, and each topic is characterised by a distribution over words. The model works by inferring the hidden topic structure from the observed words in the documents. Despite the recent advancements in neural topic models, LDA remains a popular choice for topic modeling due to its simplicity and interpretability, especially in the context of text data like citizen proposals.  
+            
+            For more information, you can refer to the original paper by Blei, Ng, and Jordan (2003):
+            Blei, D. M., Ng, A. Y., & Jordan, M. I. (2003). Latent dirichlet allocation. Journal of Machine Learning Research, 3(Jan), 993–1022.
+        """)
+    
+    st.markdown("""
+                Two metrics are used to define the optimal number of topics: 
+                - Coherence Score: Coherence measures the interpretability and semantic consistency of topics by comparing word pair co-occurrences within the topics. Higher coherence scores suggest better and more meaningful topics.
+                - Perplexity Score: Perplexity measures how well a probabilistic model predicts a sample. In the context of LDA, lower perplexity values indicate that the model has a better predictive power for unseen data.
+
+                The following chart displays the coherence and perplexity scores for different numbers of topics in the LDA model. The goal is to select the number of topics that strikes a balance between a high coherence score and a low perplexity score, ensuring that the topics are both interpretable and predictive.
+                As shown in the chart, the optimal number of topics is **7**, which has a high coherence score and a low perplexity score.
+    """)
+    
     display_coh_per(topic_numbers)
     st.subheader('3.2 Topic Summaries')
     st.markdown("""
-        ##### The citizen proposals submitted to the OmaStadi participatory budgeting program reveal a blend of space-oriented and function-oriented priorities, closely tied to the daily urban activities of Helsinki’s residents. Topics range from enhancing public spaces like sports parks, playgrounds, and green areas to addressing functional improvements such as traffic infrastructure, lighting for safety, and outdoor fitness facilities.
+        The citizen proposals submitted to the OmaStadi participatory budgeting programme reveal a blend of space-oriented and function-oriented priorities, closely tied to the daily urban activities of Helsinki’s residents. 
+        Topics range from enhancing public spaces like sports parks, playgrounds, and green areas to addressing functional improvements such as traffic infrastructure, lighting for safety, and outdoor fitness facilities.    
+        Notably, Topic 2 reflects a unique characteristic of the Helsinki case: it centres on waterfront-related proposals, which is primarily due to the city’s extensive coastline and strong public interest in improving access to and the usability of coastal areas.
         """)
     display_topics(lda_model, topic_summaries, top_proposals)
     plot_topic_distribution(proposals_by_round_district, topic_summaries)
@@ -499,7 +518,9 @@ def main():
     st.subheader('3.5 Predict Topics for New Proposals')
     st.write("""
         Once the model has been trained on historical data, it can be used to predict the topic distribution for new proposals submitted by citizens.
-        For instance, let's copy and paste a proposal text from this proposal about improving the Herttoniemi sports park (https://omastadi.hel.fi/processes/osbu-2019/f/171/proposals/124?):
+        Please note that the model is trained on Finnish-language proposals, so it only works with texts written in Finnish.
+        
+        For instance, try copy and paste a proposal text from this proposal about improving the Herttoniemi sports park (https://omastadi.hel.fi/processes/osbu-2019/f/171/proposals/124?):
         
         __________________________ Copy and paste the proposal text below __________________________
         
@@ -511,6 +532,8 @@ def main():
         - Herttoniemen yhteiskoulussa toimii jalkapalloluokkia.
         - tekonurmi ei estä kentän jäädytttämistä luistelukäyttöön talvisin.
         - kumirouheen tilalle voi valita kierrätettävän Saltex Biofill luomu-täyteaineen.
+        
+        ___________________________ Copy and paste the proposal text above __________________________
         """)
     user_input = st.text_area(
         "Enter text (or multiple texts separated by new lines):",

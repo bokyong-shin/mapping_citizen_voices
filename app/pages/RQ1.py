@@ -24,6 +24,13 @@ def display_map(df, year, statistics_column, geojson_file):
     gdf = gdf.merge(df_year, on='Area', how='left')
     gdf[statistics_column] = gdf[statistics_column].round(3)
     st.header(f'{statistics_column} in year {year}')
+    st.markdown(
+        """
+        Let's explore the socio-economic and demographic characteristics of Helsinki's districts.
+        Especially, check out *'proportion of foreign language speakers'* and *'proportion of higher education'* in different years (in the left sidebar) to see how the city has become more segregated over time.   
+        **Note**: Districts or years with missing data are displayed in white.
+        """
+    )
     map = folium.Map(location = [60.1800, 25.05], zoom_start=10.5, tiles='cartodb positron')
     
     folium.Choropleth(
@@ -109,7 +116,12 @@ def display_index_map(df, selected_index, geojson_file):
 
     gdf[selected_index] = gdf[selected_index].round(2)
 
-    st.header(f"{selected_index} Map ({selected_year})")
+    st.subheader(f"{selected_index} Map ({selected_year})")
+    st.markdown("""
+                Let’s explore the four indices across Helsinki’s districts. 
+                Pay particular attention to the *Economic Prosperity Index* and *Socioeconomic Dependency Index* (in the left sidebar), which reveal a somewhat contrasting pattern between the western and eastern parts of the city.
+                """
+    )
 
     map_center = [60.1800, 25.05]
     map = folium.Map(location=map_center, zoom_start=10.5, tiles="cartodb positron")
@@ -160,11 +172,12 @@ def main():
     st.title(APP_TITLE)
     
     st.markdown(
-    """
-    ##### The data is based on district-level statistical data retrieved from [Helsinki Map Service](https://kartta.hel.fi) and [Helsinki Region Infoshare](https://hri.fi/en_gb/) on 10 March, 2025. The year 2023 was the most recent data available at the time of retrieval. \n
-    ##### If there is not-available values in a specific year and district, it is displayed as a white colour.
-    """
-)
+        """
+        This page presents composite indices based on district-level statistics in Helsinki to illustrate varying characteristics across 34 districts.  
+        The data was retrieved from the [Helsinki Map Service](https://kartta.hel.fi) and [Helsinki Region Infoshare](https://hri.fi/en_gb/) on 10 March 2025, with 2023 being the most recent year available at the time.  
+        """
+    )
+    
     district_data = pd.read_csv('app/data/district_data.csv')
 
     notes = {
@@ -209,9 +222,7 @@ def main():
         index=0
     )
     selected_year = display_year_filters(district_data)
-    
     st.sidebar.markdown(f"**Note:**<br>{notes.get(statistics_column, 'No additional information available for this statistic.')}", unsafe_allow_html=True)
-
     df_year, selected_stat = display_map(district_data, selected_year, statistics_column, 'app/data/districts.geojson')
     display_statistics(df_year, selected_stat)
     
@@ -229,165 +240,139 @@ def main():
         - Public Service Accessibility Index (PSAI): Employs the weighted mean to ensure equal representation of diverse service categories.
         """
     )
-
-    st.markdown("### 1. Demographic Diversity Index (CDI)")
-    st.markdown(
-        """
-        The Demographic Diversity Index (CDI) quantifies heterogeneity in population characteristics by measuring the probability that two randomly selected individuals belong to different demographic groups. This index applies Simpson’s Diversity Index with Sullivan’s Extension to account for multiple demographic dimensions and aggregate them into a single composite diversity measure (McLaughlin et al., 2016).
-        
-        McLaughlin, J. E., McLaughlin, G. W., McLaughlin, J. S., & White, C. Y. (2016). Using Simpson’s diversity index to examine multidimensional models of diversity in health professions education. *International Journal of Medical Education*, 7, 1–5.
-        """
-    )
-
-    st.latex(r"""
-    CDI_j = 1 - \sum_{c=1}^{C} \sum_{p=1}^{P} (Y_{c,p})^2
-    """)
-
-    st.markdown(
-        r"""
-        Where:  
-        - CDI_j = Composite Demographic Diversity Index for district j  
-        - C = Total number of demographic categories considered  
-        - P = Number of demographic groups within category c  
-        - Y_c,p = Proportion of individuals in category p within demographic category c
-
-        This formulation follows Sullivan’s Extension of Simpson’s Index,  
-        allowing for the aggregation of education, age, gender, language, and workforce diversity into a single measure.
-        """
-    )
-
-    st.markdown(
-        """
-        Indicators Included:  
-        - Education:  
-            - Proportion of basic education  
-            - Proportion of upper secondary education  
-            - Proportion of lower tertiary education  
-            - Proportion of higher education  
-        - Age Structure:  
-            - Proportion of youth (0-14)  
-            - Proportion of elderly (65+)  
-            - Proportion of working-age population (15-64)  
-        - Gender Composition:  
-            - Proportion of males  
-            - Proportion of females  
-        - Linguistic Diversity:  
-            - Proportion of foreign language speakers  
-            - Proportion of Finnish and Sami speakers  
-            - Proportion of Swedish speakers  
-        - Workforce Structure:  
-            - Proportion of creative class in the workforce  
-            - Proportion of non-creative class in the workforce  
-
-        Interpretation:  
-        - Higher CDI values indicate greater demographic diversity, meaning a district has a more balanced mix of education levels, age groups, linguistic backgrounds, gender distribution, and workforce composition.  
-        - Lower CDI values suggest less diversity, where the population is more homogeneous in its demographic characteristics. 
-        """
-    )
-
-    # Economic Prosperity Index
-    st.markdown("### 2. Economic Prosperity Index (EPI)")
-    st.markdown(
-        """
-        The Economic Prosperity Index (EPI) measures the economic well-being of each district by evaluating 
-        income levels, income equality, workforce stability, and educational attainment. It includes the following four indicators:
-        
-        - Average taxable income – Higher values indicate greater economic prosperity.
-        - Gini coefficient (inverted) – Ensures higher values reflect greater income equality.
-        - Unemployment rate (inverted) – Higher values indicate better labour market conditions.
-        - Proportion of highly educated residents – Represents human capital and workforce quality.
-
-        The index is computed using a weighted sum, with the greatest emphasis on income levels (40%), while 
-        unemployment, inequality, and education each contribute 20% to the overall assessment.
-        """
-    )
-
-    st.latex(r"""
-    \text{EPI} = 0.4 \times \text{Income} + 0.2 \times (1 - \text{Gini Coefficient}) + 
-    0.2 \times (1 - \text{Unemployment}) + 0.2 \times \text{Higher Education Proportion}
-    """)
-
-    st.markdown(
-        """
-        Interpretation:
-        - Higher EPI values indicate stronger economic prosperity, with higher income, greater equality, lower unemployment, and a more educated workforce.
-        - Lower EPI values suggest economic challenges, such as income disparity, high unemployment, and lower educational attainment.
-        - The inverted Gini coefficient and unemployment rate ensure that all variables are aligned, so higher values always indicate better conditions.
-        """
-    )
-
-    # Socioeconomic Dependency Index
-    st.markdown("### 3. Socioeconomic Dependency Index (SDI)")
-    st.markdown(
-        """
-        The Socioeconomic Dependency Index (SDI) assesses structural dependencies within districts, 
-        focusing on household size, linguistic diversity, age structure, and subsidised housing.  
-        It captures the extent to which certain population groups may require additional social or financial support.
-        
-        The index is computed using the geometric mean, ensuring that extreme values in one factor do not overly dominate the measure.
-        """
-    )
-
-    st.latex(r"""
-    \text{SDI} = \left( \prod_{i=1}^{4} (X_i) \right)^{\frac{1}{4}}
-    """)
-
-    st.markdown(
-        """
-        Where:
-        - X_1 = Proportion of four or more-person households  
-        - X_2 = Proportion of foreign language speakers  
-        - X_3 = Demographic dependency ratio (ratio of dependents to working-age population)  
-        - X_4 = Proportion of subsidised rental apartments  
-
-        Interpretation:
-        - Higher SDI values indicate greater socioeconomic dependency, meaning a district has a higher share of populations that may require additional public services or financial support.
-        - Lower SDI values suggest a more self-sufficient population structure, with fewer groups dependent on external assistance.
-        """
-    )
-
-    # Public Service Accessibility Index
-    st.markdown("### 4. Public Service Accessibility Index (PSAI)")
-    st.markdown(
-        """
-        The Public Service Accessibility Index (PSAI) measures the availability of essential public services 
-        across districts, including green spaces, childcare, cultural activities, and social welfare services.  
-        The index is computed using a weighted mean, where each service category is given equal weight to 
-        ensure a fair representation of different public service types.
-        """
-    )
-
-    st.latex(r"""
-    \text{PSAI} = \frac{1}{8} \sum_{i=1}^{8} X_i
-    """)
-
-    st.markdown(
-        """
-        Where:  
-        - X_1 = Service points for dog areas per 1,000 persons  
-        *(Dog parks, pet-friendly spaces, and related services.)*  
-        - X_2 = Service points for parks and green areas per 1,000 persons  
-        *(Access to parks, recreational green spaces, and nature areas.)*  
-        - X_3 = Service points for playgrounds per 1,000 persons  
-        *(Public playgrounds, both supervised and unsupervised.)*  
-        - X_4 = Service points for cultural activities per 1,000 persons  
-        *(Libraries, museums, and community cultural spaces.)*  
-        - X_5 = Service points for circular economy per 1,000 persons  
-        *(Recycling services, shared spaces, and sustainability initiatives.)*  
-        - X_6 = Service points for daycare and pre-primary education per 1,000 persons  
-        *(Early childhood education facilities supporting families.)*  
-        - X_7 = Service points for child and family services per 1,000 persons  
-        *(Family support centres, child welfare, and social assistance services.)*  
-        - X_8 = Service points for social welfare services per 1,000 persons  
-        *(Elderly care, disability assistance, and other social welfare programmes.)*  
-
-        Interpretation:  
-        - Higher PSAI values indicate greater accessibility to public services, supporting residents’ well-being.  
-        - Lower PSAI values suggest limited service availability, highlighting potential service gaps across districts.  
-        """
-    )
     
-    st.markdown("### Timeseries of District-Level Indexes")
+    with st.expander("Click to see how each index is calculated."):
+        st.markdown("### 1. Demographic Diversity Index (CDI)")
+        st.markdown(
+            """
+            The Demographic Diversity Index (CDI) quantifies heterogeneity in population characteristics by measuring the probability that two randomly selected individuals belong to different demographic groups. This index applies Simpson’s Diversity Index with Sullivan’s Extension to account for multiple demographic dimensions and aggregate them into a single composite diversity measure (McLaughlin et al., 2016).
+            
+            McLaughlin, J. E., McLaughlin, G. W., McLaughlin, J. S., & White, C. Y. (2016). Using Simpson’s diversity index to examine multidimensional models of diversity in health professions education. *International Journal of Medical Education*, 7, 1–5.
+            """
+        )
+        st.latex(r"""
+        CDI_j = 1 - \sum_{c=1}^{C} \sum_{p=1}^{P} (Y_{c,p})^2
+        """)
+        st.markdown(
+            r"""
+            Where:  
+            - CDI_j = Composite Demographic Diversity Index for district j  
+            - C = Total number of demographic categories considered  
+            - P = Number of demographic groups within category c  
+            - Y_c,p = Proportion of individuals in category p within demographic category c
+
+            This formulation follows Sullivan’s Extension of Simpson’s Index,  
+            allowing for the aggregation of education, age, gender, language, and workforce diversity into a single measure.
+            """
+        )
+        st.markdown(
+            """
+            **Indicators Included:**  
+            - **Education:**  
+                - Proportion of basic education  
+                - Proportion of upper secondary education  
+                - Proportion of lower tertiary education  
+                - Proportion of higher education  
+            - **Age Structure:**  
+                - Proportion of youth (0–14)  
+                - Proportion of elderly (65+)  
+                - Proportion of working-age population (15–64)  
+            - **Gender Composition:**  
+                - Proportion of males  
+                - Proportion of females  
+            - **Linguistic Diversity:**  
+                - Proportion of foreign language speakers  
+                - Proportion of Finnish and Sámi speakers  
+                - Proportion of Swedish speakers  
+            - **Workforce Structure:**  
+                - Proportion of creative class in the workforce  
+                - Proportion of non-creative class in the workforce  
+
+            **Interpretation:**  
+            - Higher CDI values indicate greater demographic diversity.  
+            - Lower CDI values suggest a more homogeneous population.
+            """
+        )
+
+        st.markdown("### 2. Economic Prosperity Index (EPI)")
+        st.markdown(
+            """
+            The Economic Prosperity Index (EPI) measures the economic well-being of each district by evaluating 
+            income levels, income equality, workforce stability, and educational attainment. It includes:
+            
+            - Average taxable income – Higher values indicate greater prosperity.  
+            - Gini coefficient (inverted) – Reflects income equality.  
+            - Unemployment rate (inverted) – Indicates stronger labour market conditions.  
+            - Proportion of highly educated residents – Represents human capital.
+
+            The index is calculated using a weighted sum:
+            """
+        )
+        st.latex(r"""
+        \text{EPI} = 0.4 \times \text{Income} + 0.2 \times (1 - \text{Gini}) + 
+        0.2 \times (1 - \text{Unemployment}) + 0.2 \times \text{Higher Education Proportion}
+        """)
+        st.markdown(
+            """
+            **Interpretation:**  
+            - Higher values = stronger prosperity and equality.  
+            - Lower values = economic and social challenges.
+            """
+        )
+
+        st.markdown("### 3. Socioeconomic Dependency Index (SDI)")
+        st.markdown(
+            """
+            The Socioeconomic Dependency Index (SDI) captures population groups that may require additional support, based on:
+            - Large household sizes  
+            - Linguistic diversity  
+            - Dependency ratios  
+            - Proportion in subsidised housing
+
+            The index uses a geometric mean:
+            """
+        )
+        st.latex(r"""
+        \text{SDI} = \left( \prod_{i=1}^{4} X_i \right)^{\frac{1}{4}}
+        """)
+        st.markdown(
+            """
+            **Interpretation:**  
+            - Higher SDI = greater dependency and need for services.  
+            - Lower SDI = more self-sufficient population.
+            """
+        )
+
+        st.markdown("### 4. Public Service Accessibility Index (PSAI)")
+        st.markdown(
+            """
+            The Public Service Accessibility Index (PSAI) measures access to key services, including:
+            - Green areas  
+            - Childcare  
+            - Cultural activities  
+            - Social welfare
+
+            Calculated as an average of eight standardised indicators:
+            """
+        )
+        st.latex(r"""
+        \text{PSAI} = \frac{1}{8} \sum_{i=1}^{8} X_i
+        """)
+        st.markdown(
+            """
+            **Interpretation:**  
+            - Higher PSAI = better access to services.  
+            - Lower PSAI = potential gaps in public service provision.
+            """
+        )
+
+    st.markdown("#### Timeseries of District-Level Indexes")
+    st.markdown("""
+                From 2018 to 2023, Helsinki districts saw increasing demographic diversity and socioeconomic dependency, while economic prosperity slightly declined. 
+                The trends suggest that Helsinki’s population is becoming more diverse and increasingly reliant on public support, while economic prosperity shows signs of stagnation. 
+                However, the linear coefficients indicate that the rates of change are minimal, largely due to the short five-year observation period. 
+                """
+    )
     st.image('app/data/indices_timeseries.png')
     
     district_indexes_data = district_data.merge(indexes, on=["Area", "Year"], how="left")

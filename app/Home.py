@@ -18,7 +18,7 @@ st.markdown(
     
     Many cities invite residents to suggest ideas for how public money should be spent in their neighbourhoods. This process is called [*participatory budgeting*](https://en.wikipedia.org/wiki/Participatory_budgeting) (PB). Citizen proposals often provide valuable insights into local challenges and community priorities.  
 
-    However, when a large number of proposals are submitted, it can be difficult to understand common themes, trends, or differences between areas. In major cities like Barcelona, Helsinki, New York, Paris, and Seoul, hundreds to thousands of proposals are submitted in each round, making it especially challenging to analyse and respond to citizen input effectively.
+    However, when a large number of proposals are submitted, it can be difficult to understand common themes, trends, or differences between areas. In major case cities like Barcelona, Helsinki, New York, Paris, and Seoul, hundreds to thousands of proposals are submitted in each round, making it especially challenging to analyse and respond to citizen input effectively.
     
     This dashboard shows how two public datasets, citizen proposals and district-level statistics, can be combined to make sense of this information. Using the [OmaStadi PB programme](https://omastadi.hel.fi/) in Helsinki as an example, the dashboard helps identify local needs and connects proposals to the specific characteristics of each area. The goal is to support more informed and equitable decision-making throughout the participatory process.
 
@@ -32,7 +32,7 @@ st.markdown(
     """
     #### Dashboard Structure  
 
-    This dashboard is organised into three pages (left sidebar), each corresponding to a specific research question:  
+    This dashboard is organised into three pages (left sidebar), each corresponding to a specific research question (RQ):  
     - 🏙️ **RQ1:** What are the socio-economic and demographic characteristics of Helsinki’s districts and major districts?  
     - 📄 **RQ2:** What are the consistent thematic topics in citizen proposals across three rounds of OmaStadi PB?  
     - 🔗 **RQ3:** How are district characteristics related to the thematic focus of citizen proposals?  
