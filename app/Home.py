@@ -24,7 +24,7 @@ st.markdown(
 
     The source code for this dashboard is available at: [https://github.com/bokyong-shin/mapping_citizen_voices](https://github.com/bokyong-shin/mapping_citizen_voices)
     
-    **Note:** This dashboard supports a demonstration of the data analysis and visualisation techniques used in the paper "Mapping Citizen Voices: Transforming Participatory Budgeting with Combined Data Streams in Helsinki". A more comprehensive analysis of the data, including theoretical backgrounds, methods, and detailed descriptions, can be found in the paper once it is published (Latest update: 6 Jul, 2025).
+    **Lastest update:** 7 Jul, 2025.
     """
 )
 
@@ -33,11 +33,9 @@ st.markdown(
     #### Dashboard Structure  
 
     This dashboard is organised into three pages (left sidebar), each corresponding to a specific research question (RQ):  
-    - 🏙️ **RQ1:** What are the socio-economic and demographic characteristics of Helsinki’s districts and major districts?  
+    - 🏙️ **RQ1:** What are the socio-economic and demographic characteristics of Helsinki’s districts?  
     - 📄 **RQ2:** What are the consistent thematic topics in citizen proposals across three rounds of OmaStadi PB?  
     - 🔗 **RQ3:** How are district characteristics related to the thematic focus of citizen proposals?  
-
-    Each page allows users to explore the data visually and interactively, reflecting the key findings discussed in the paper.
     """
 )
 
