@@ -279,7 +279,12 @@ def create_heatmap(df, topic_summaries, district_order):
                 """
     )
     heatmap_data = prepare_heatmap_data(df)
-    topic_titles = [topic_summaries[i]["title"] for i in range(7)]  
+    def format_title(title):
+        if ":" in title:
+            title = title.split(":", 1)[-1].strip()
+        import textwrap
+        return "<br>".join(textwrap.wrap(title, width=35, break_long_words=False))
+    topic_titles = [format_title(topic_summaries[i]["title"]) for i in range(7)] 
     heatmap_data = heatmap_data.set_index('district').reindex(district_order).reset_index()
     districts = heatmap_data['district'].tolist()
     data_matrix = []
@@ -298,18 +303,23 @@ def create_heatmap(df, topic_summaries, district_order):
             'categories': districts,  
             'title': {'text': 'Districts'},
             'labels': {
-                'rotation': 45  
+                'rotation': 45,
+                'style': {'fontSize': '15px'}
             }
         },
         'yAxis': {
             'categories': topic_titles,  
             'title': {'text': 'Topics'},
-            'reversed': True
+            'reversed': True,
+            'labels': {
+                'useHTML': True,
+                'style': {'fontSize': '15px'}
+            }
         },
         'colorAxis': {
             'min': 0,
             'minColor': '#FFFFFF',
-            'maxColor': '#FF0000'  
+            'maxColor': '#000000'  
         },
         'legend': {
             'align': 'right',
@@ -329,7 +339,7 @@ def create_heatmap(df, topic_summaries, district_order):
             }
         }],
         'tooltip': {
-            'formatter': 'function() { return "<b>Topic: </b>" + this.series.yAxis.categories[this.point.y] + "<br><b>District: </b>" + this.series.xAxis.categories[this.point.x] + "<br><b>Proportion: </b>" + this.point.value.toFixed(4); }'
+            'enabled': False
         }
     }
     hc.streamlit_highcharts(chart_options, height=800)
