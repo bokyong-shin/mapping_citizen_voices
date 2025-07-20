@@ -273,9 +273,9 @@ district_order = [
 def create_heatmap(df, topic_summaries, district_order):
     st.subheader("3.4 Heatmap of Topic Distribution by District")
     st.markdown("""
-                The heatmap shows spatial variation in topic emphasis, with districts generally ordered from west to east. 
-                While western districts tend to prioritise park connectivity, some northern areas (e.g., Itä-Pakila and Puistola) show stronger interest in youth-oriented spaces. If you check the proportion of youth in the RQ1 page, the northern part especially shows the highest levels. 
-                Although clear west–east patterns are not consistent, several districts display distinctive priorities shaped by local needs and contexts.
+                The heatmap reveals both city-wide trends and distinct local patterns in citizen priorities. At the city-wide level, *Enhancing Pathways and Park Connectivity* (Topic 5) stands out as a shared concern across nearly all districts, reflecting widespread demand for improved recreational infrastructure. *Developing Spaces for Children and Youth* (Topic 7) emerges as the second most prevalent theme, with a notable cluster in northern districts such as Itä-Pakila, Tuomarinkylä, Maunula, Pukinmäki, Malmi, and Puistola—areas that also report a relatively higher proportion of youth population (see the RQ1 page). 
+
+                Additionally, certain districts emphasise specific themes: Myllypuro (Topic 4: 0.33), Östersundom (Topic 2: 0.32), and Vironniemi (Topic 3: 0.32), each highlighting distinct priorities that warrant closer examination of their local contexts.
                 """
     )
     heatmap_data = prepare_heatmap_data(df)

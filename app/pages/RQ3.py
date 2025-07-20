@@ -227,14 +227,14 @@ def main():
     st.write("")
     st.markdown(
     """
-    The heatmap below shows the Pearson correlation coefficients between four district-level indices and the thematic focus of citizen proposals.  
+    The matrix below shows the Pearson correlation coefficients between four district-level indices and the thematic focus of citizen proposals.  
     Significance levels are marked as: `*` (*p* < 0.1), `**` (*p* < 0.05), `***` (*p* < 0.01).  
 
     The analysis reveals how local socioeconomic and infrastructural conditions relate to citizens’ priorities in participatory budgeting.  
-    Notably, *Topic 3 (Inclusive Public Spaces and Services)* shows strong, significant correlations with three indices: positively with economic prosperity and public service accessibility, and negatively with socioeconomic dependency. This suggests that more affluent, service-rich districts tend to propose ideas focused on inclusivity and civic infrastructure.
+    Contrary to expectations, correlations are generally weak (ranging from -0.16 to 0.17), indicating that no single factor explains proposal patterns. However, the Economic Prosperity Index and Socioeconomic Dependency Index reveal contrasting trends, with correlations moving in opposite directions across topics.
 
-    In contrast, *Topic 7 (Spaces for Children and Youth)* is more prominent in economically or socially vulnerable areas, showing a negative correlation with prosperity and a positive one with dependency.  
-    These patterns reflect a spatial and socioeconomic divide in citizen priorities: **with privileged districts emphasising community services, and less privileged ones focusing on youth needs and basic support.**
+    Only Topic 3 (*Inclusive Public Spaces and Services*) and Topic 2 (*Waterfront Access and Recreation*) correlate positively with economic prosperity, suggesting that more affluent districts tend to propose community-oriented or leisure projects. In contrast, districts with higher socioeconomic dependency are more likely to prioritise infrastructure and service needs. 
+    Notably, the Public Service Accessibility Index also shows positive links with Topic 3 and Topic 6 (*Community Events and Participatory Programmes*), implying that better service access may foster proposals that enhance community life rather than address basic infrastructure gaps.
     """
     )
     st.image('app/data/correlation_heatmap.png')
