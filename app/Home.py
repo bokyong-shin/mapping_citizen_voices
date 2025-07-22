@@ -21,8 +21,6 @@ st.markdown(
     However, when a large number of proposals are submitted, it can be difficult to understand common themes, trends, or differences between areas. In major case cities like Barcelona, Helsinki, New York, Paris, and Seoul, hundreds to thousands of proposals are submitted in each round, making it especially challenging to analyse and respond to citizen input effectively.
     
     This dashboard shows how two public datasets, citizen proposals and district-level statistics, can be combined to make sense of this information. Using the [OmaStadi PB programme](https://omastadi.hel.fi/) in Helsinki as an example, the dashboard helps identify local needs and connects proposals to the specific characteristics of each area. The goal is to support more informed and equitable decision-making throughout the participatory process.
-
-    The source code for this dashboard is available at: [https://github.com/bokyong-shin/mapping_citizen_voices](https://github.com/bokyong-shin/mapping_citizen_voices)
     
     **Lastest update:** 7 Jul, 2025.
     """
